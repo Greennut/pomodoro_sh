@@ -1,0 +1,5 @@
+#!/bin/bash
+_pid="`ps -el| grep pomodoro |awk '{print $4}'`";
+pkill xfce4-notifyd;
+kill $_pid;
+

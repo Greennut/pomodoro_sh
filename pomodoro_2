@@ -1,0 +1,38 @@
+#!/bin/bash
+counter=0
+limit=$1
+ratio=0.0
+step=4;
+quant=0;
+quantinsecond=0;
+n=0; # actual number of step
+
+notify-send -u critical -i appointment -t 600 "Pomodoro" "Pomodoro started. You have $1 minutes left!"
+
+quant=$(echo "scale=9; $limit/$step" | bc);
+# echo "quant is $quant";
+quantinsecond=$(echo "scale=1; $quant*60"| bc);
+
+
+while (( $n < $step )); do
+   
+   sleep $quantinsecond;
+   counter=$(echo  "scale=1; $counter + $quant" | bc) ;
+   ratio=$(echo "scale=2;$counter/$limit" | bc) ;
+   let n=$n+1;
+   echo "$ratio passed so far...";
+   pkill xfce4-notifyd;
+   notify-send -u critical -i appointment-new -t 600 "$ratio" " passed so far..."
+done
+
+if (( $n >= $step )); then
+   echo
+   pkill xfce4-notifyd;
+   notify-send -u critical -i appointment "Pomodoro" "Pomodoro ended. Please stop the work and take a rest!";
+
+   NOW=$(date +"%a %m-%d-%y");TIME=$(date +"%r";);
+   echo -n -e "$limit Minutes \t $NOW\t$TIME\n" >> ~/bin/pomodorolog; 
+
+   echo -e '\a' >&2
+   exit 0
+fi
