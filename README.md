@@ -14,7 +14,7 @@ quitpomo
 
 ------------
 To install: simply download the files to any local folder, make sure to set the path variables.
-To run: use command: pomodoro time_in_minutes, for example, to set 25 minutes, type: pomodoro_2 25
+To run: use command: pomodoro time_in_minutes, for example, to set 25 minutes, type: pomodoro 25
 To stop: use command: quitpomo
 
 
